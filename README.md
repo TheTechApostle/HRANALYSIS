@@ -1,4 +1,4 @@
-# HR Employee Attrition SQL Project
+# HR Employee Attrition SQL and Python Project
 
 ## 📌 Overview
 This project analyzes employee attrition data using SQL queries.  
