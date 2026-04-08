@@ -480,13 +480,20 @@ st.markdown("""
 # ─────────────────────────────────────────────
 # TABS
 # ─────────────────────────────────────────────
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     "🎯 Prediction & Tier",
     "⚖️ Model Comparison",
     "📊 Analytics",
     "📈 Feature Insights",
     "ℹ️ Model Info",
+    "🔗 Other App"
 ])
+
+
+with tab6:
+    st.subheader("External Navigation")
+    st.write("Click the button below to switch to the second HR Attrition application using XGBoost.")
+    st.link_button("🚀 Open Attrition App 2", "https://hrattritionpredictions2.streamlit.app/")
 
 
 # ══════════════════════════════════════════════
