@@ -445,7 +445,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 with tab5:
     st.subheader("External Navigation")
     st.write("Click the button below to switch to the main HR Attrition application using both models.")
-    st.link_button("🚀 Open Attrition App 2", "https://hrattritionpredictions.streamlit.app/")
+    st.link_button("🚀 Open Attrition Main App", "https://hrattritionpredictions.streamlit.app/")
 # ─────────────────────────────────────────────
 # Collect inputs dict
 # ─────────────────────────────────────────────
