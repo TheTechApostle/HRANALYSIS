@@ -1,90 +1,83 @@
-# HR Employee Attrition SQL and Python Project
+# HR Employee Attrition Predictor — Streamlit App
 
-## 📌 Overview
-This project analyzes employee attrition data using SQL queries.  
-The dataset is stored in a table called **`hr_attrition_employee`**, which contains information about employees such as demographics, job details, compensation, and attrition status.  
-
-The goal of this project is to practice **SQL for data analysis** by answering real-world HR questions.
+A production-ready Streamlit dashboard for predicting employee attrition risk using the XGBoost model trained in `HrEmpAttrition_Optimised__2_.ipynb`.
 
 ---
 
-## 🗂️ Table: `hr_attrition_employee`
+## 🚀 Quick Start
 
-### Columns
-- **EmployeeID** – Unique identifier for each employee  
-- **Age** – Employee age  
-- **Gender** – Male/Female  
-- **MaritalStatus** – Single, Married, Divorced  
-- **Department** – Sales, HR, Research & Development, etc.  
-- **JobRole** – Specific job title  
-- **JobLevel** – Level of seniority  
-- **MonthlyIncome** – Salary per month  
-- **DailyRate** – Daily pay rate  
-- **HourlyRate** – Hourly pay rate  
-- **DistanceFromHome** – Distance between home and office  
-- **YearsAtCompany** – Tenure at the company  
-- **YearsSinceLastPromotion** – Time since last promotion  
-- **NumCompaniesWorked** – Number of companies worked before  
-- **WorkLifeBalance** – Rating (1–4)  
-- **JobSatisfaction** – Rating (1–4)  
-- **PerformanceRating** – Rating (1–4)  
-- **PercentSalaryHike** – Percentage increase in salary  
-- **StockOptionLevel** – Stock option level (0–3)  
-- **TrainingTimesLastYear** – Number of training sessions attended  
-- **BusinessTravel** – Travel frequency (Rarely, Frequently, Non-Travel)  
-- **EducationField** – Field of study  
-- **EnvironmentSatisfaction** – Rating (1–4)  
-- **Attrition** – Whether the employee left (`Yes`/`No`)  
-- **YearsWithCurrManager** – Years with current manager  
-- **JobInvolvement** – Rating (1–4)
+### 1. Generate model files from notebook
+Run every cell in your notebook. The last two cells save:
+```
+XG_model.pkl        ← trained XGBoost classifier
+model_columns.pkl   ← list of feature column names
+```
+Copy both files into the same folder as `app.py`.
+
+### 2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Launch the app
+```bash
+streamlit run app.py
+```
 
 ---
 
-## 🔎 Analyses Performed
-
-### 1. Basic Analysis
-- Average Monthly Income by Job Role  
-- Employee count per Department  
-- Overtime vs Non-overtime employee counts  
-- Average DistanceFromHome of employees who left  
-- Highest and lowest DailyRate per BusinessTravel category  
-
-### 2. Grouped Analysis
-- Average YearsAtCompany by MaritalStatus and Gender  
-- Average TotalWorkingYears by EducationField  
-- Employee count per JobLevel and WorkLifeBalance  
-- Average PercentSalaryHike per PerformanceRating  
-- Total Monthly Income of employees with StockOptionLevel > 0 grouped by Department  
-
-### 3. Filtered Queries
-- Employees with >10 YearsAtCompany and no promotions  
-- Employees with >3 trainings and poor WorkLifeBalance  
-- Employees with low JobSatisfaction in Sales or R&D  
-- Employees earning more than average MonthlyIncome  
-
-### 4. Trends & Insights
-- Correlation between JobInvolvement and PerformanceRating  
-- EducationField with highest EnvironmentSatisfaction  
-- Attrition distribution by Age group (<30, 30–50, >50)  
-- Frequent vs Rare travelers and YearsWithCurrManager  
-- Average HourlyRate for employees who changed companies >2 times  
-
-### 5. Advanced Subqueries
-- Top 5 highest earners with JobRoles and Departments  
+## 📁 Project Structure
+```
+project/
+├── app.py               ← Streamlit application
+├── requirements.txt     ← Python dependencies
+├── XG_model.pkl         ← trained XGBoost model  [generate from notebook]
+└── model_columns.pkl    ← feature column names   [generate from notebook]
+```
 
 ---
 
-## ⚙️ How to Run
-1. Import the dataset into your SQL environment (e.g., MySQL, PostgreSQL, SQL Server).  
-2. Ensure the table name is **`hr_attrition_employee`**.  
-3. Run the queries provided in the `queries.sql` file (or directly from this README).  
-4. Capture screenshots of both **query and result** for submission.  
+## 🌐 Deployment Options
+
+### Streamlit Community Cloud (free)
+1. Push project to a GitHub repository
+2. Visit https://share.streamlit.io
+3. Connect your repo, set `app.py` as entrypoint
+4. Deploy — no server needed
+
+### Heroku
+```bash
+# Add Procfile:
+echo "web: streamlit run app.py --server.port $PORT" > Procfile
+git push heroku main
+```
+
+### Docker
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+EXPOSE 8501
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
 
 ---
 
-## 📊 Example Query
-```sql
--- Average Monthly Income by Job Role
-SELECT JobRole, AVG(MonthlyIncome) AS AvgMonthlyIncome
-FROM hr_attrition_employee
-GROUP BY JobRole;
+## ✨ Features
+
+| Tab | Contents |
+|-----|----------|
+| 🎯 Prediction & Risk | Live attrition probability gauge, risk radar chart, KPI cards, prioritised HR recommendations |
+| 📊 Analytics Dashboard | Department breakdown, income vs attrition, age distribution, overtime analysis, satisfaction heatmap |
+| 📈 Feature Insights | XGBoost feature importances, normalised employee scores, all-model comparison table |
+| ℹ️ Model Info | Pipeline details, improvement summary, setup instructions |
+
+---
+
+## 🤖 Model Details
+
+- **Algorithm:** XGBoost (600 estimators, max_depth=5, lr=0.03)
+- **Imbalance handling:** SMOTE + scale_pos_weight (~5.2)
+- **ROC-AUC:** 0.929 · **F1:** 0.681 · **Recall:** 64.3%
+- **Features:** 30 (one-hot encoded categoricals + numeric)
