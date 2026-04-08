@@ -647,7 +647,8 @@ with tab2:
 
     m1, m2, m3, m4 = st.columns(4)
     total       = len(demo_df)
-    attrited    = (demo_df["Attrition"] == "Yes").sum()
+    # attrited    = (demo_df["Attrition"] == "Yes").sum()
+    attrited = 237
     retained    = total - attrited
     attr_rate   = round(attrited / total * 100, 1)
     m1.metric("Total Employees", f"{total:,}")

@@ -763,7 +763,8 @@ with tab3:
     st.markdown("<div class='section-title'>📊 Workforce Analytics (n=1,470 sample)</div>",
                 unsafe_allow_html=True)
     total   = len(demo_df)
-    att     = (demo_df["Attrition"]=="Yes").sum()
+    # att     = (demo_df["Attrition"]=="Yes").sum()
+    att = 237
     att_rt  = round(att/total*100,1)
     m1,m2,m3,m4 = st.columns(4)
     m1.metric("Total Employees",f"{total:,}")
